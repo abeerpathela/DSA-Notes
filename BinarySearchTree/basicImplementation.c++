@@ -87,6 +87,55 @@ void levelorderTraversal(Node* root){
     }
 }
 
+int getMin(Node* root){
+    if(root == NULL){
+        return -1;
+    }
+    // hume ek aise node dhundhne hai jiske left mei kuch nahi hai 
+    // so hum sirf left me traverse karenge 
+    while(root->left !=NULL){
+        root=root->left;
+    }
+    return root->data;
+}
+
+int getMax(Node* root){
+    if(root==NULL){
+        return -1;
+    }
+    while(root->right!=NULL){
+        root=root->right;
+    }
+    return root->data;
+}
+
+bool searchBST(Node* root, int target){
+    // search karna hai ke element tree mei exist karta hai ya nahi
+    if(root==NULL){
+        return false;
+    }
+    if(root->data==target){
+        return true;
+    }
+    else{
+        if(target > root->data){
+            // right me jao 
+            bool rightAns=searchBST(root->right,target);
+            if(rightAns){
+                return true;
+            }
+        }
+        if(target < root->data){
+            // left mei jao 
+            bool leftAns=searchBST(root->left,target);
+            if(leftAns){
+                return true;
+            }
+        }
+    }
+    // return false;
+}
+
 int main(){
     Node* root=NULL;
     root=createBST(root);
@@ -98,4 +147,15 @@ int main(){
     cout<<endl;
     cout<<"Printing Level Order"<<endl;
     levelorderTraversal(root);
+
+    cout<<"Minimum is "<<getMin(root);
+    cout<<endl<<"Maximum is "<<getMax(root)<<endl;
+
+    if(searchBST(root,60)){
+        cout<<"Found element 60";
+    }
+    else{
+        cout<<"Didnt found element 60";
+    }
+
 }
